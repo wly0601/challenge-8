@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const ApplicationController = require("./ApplicationController");
+const CarAlreadyRentedError = require("../errors/CarAlreadyRentedError");
 
 class CarController extends ApplicationController {
   constructor({ carModel, userCarModel, dayjs }) {
@@ -14,7 +15,9 @@ class CarController extends ApplicationController {
     const limit = req.query.pageSize;
     const query = this.getListQueryFromRequest(req);
     const cars = await this.carModel.findAll(query);
-    const carCount = await this.carModel.count({ where: query.where, include: query.include, });
+    const carCount = await this.carModel.count({
+ where: query.where, include: query.include, 
+});
     const pagination = this.buildPaginationObject(req, carCount);
 
     res.status(200).json({
@@ -80,7 +83,7 @@ class CarController extends ApplicationController {
         }
       });
 
-      if (!!activeRent) {
+      if (activeRent) {
         const err = new CarAlreadyRentedError(car);
         res.status(422).json(err)
         return;
@@ -146,15 +149,16 @@ class CarController extends ApplicationController {
     const { size, availableAt } = req.query;
     const offset = this.getOffsetFromRequest(req);
     const limit = req.query.pageSize || 10;
-    const where = {};
+    const where = {
+};
     const include = {
       model: this.userCarModel,
       as: "userCar",
       required: false,
     }
 
-    if (!!size) where.size = size;
-    if (!!availableAt) {
+    if (size) where.size = size;
+    if (availableAt) {
       include.where = {
         rentEndedAt: {
           [Op.gte]: availableAt, 

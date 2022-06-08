@@ -23,8 +23,12 @@ function apply(app) {
   const userCarModel = UserCar;
 
   const applicationController = new ApplicationController();
-  const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel, });
-  const carController = new CarController({ carModel, userCarModel, dayjs });
+  const authenticationController = new AuthenticationController({
+ bcrypt, jwt, roleModel, userModel, 
+});
+  const carController = new CarController({
+ carModel, userCarModel, dayjs 
+});
 
   const accessControl = authenticationController.accessControl;
 
@@ -45,6 +49,8 @@ function apply(app) {
   app.use(applicationController.handleError);
 
   return app;
-};
+}
 
-module.exports = { apply, }
+module.exports = {
+ apply, 
+}

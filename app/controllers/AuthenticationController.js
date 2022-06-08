@@ -1,5 +1,5 @@
 const ApplicationController = require("./ApplicationController");
-const { EmailNotRegisteredError, InsufficientAccessError, RecordNotFoundError, WrongPasswordError } = require("../errors");
+const { EmailNotRegisteredError, InsufficientAccessError, RecordNotFoundError, WrongPasswordError, EmailAlreadyTakenError } = require("../errors");
 const { JWT_SIGNATURE_KEY } = require("../../config/application");
 
 class AuthenticationController extends ApplicationController {
@@ -52,8 +52,13 @@ class AuthenticationController extends ApplicationController {
       const email = req.body.email.toLowerCase();
       const password = req.body.password;
       const user = await this.userModel.findOne({
-        where: { email, },
-        include: [{ model: this.roleModel, attributes: [ "id", "name", ], }]
+        where: { 
+          email, 
+        },
+        include: [{ 
+          model: this.roleModel, 
+          attributes: [ "id", "name", ], 
+        }]
       });
 
       if (!user) {
@@ -73,7 +78,7 @@ class AuthenticationController extends ApplicationController {
       const accessToken = this.createTokenFromUser(user, user.Role);
 
       res.status(201).json({
-        accessToken,
+        accessToken
       })
     }
 
@@ -87,16 +92,22 @@ class AuthenticationController extends ApplicationController {
       const name = req.body.name;
       const email = req.body.email.toLowerCase();
       const password = req.body.password;
-      let existingUser = await this.userModel.findOne({ where: { email, }, });
+      let existingUser = await this.userModel.findOne({ 
+        where: { 
+          email, 
+        }, 
+      });
 
-      if (!!existingUser) {
+      if (existingUser) {
         const err = new EmailAlreadyTakenError(email);
         res.status(422).json(err);
         return;
       }
 
       const role = await this.roleModel.findOne({
-        where: { name: this.accessControl.CUSTOMER }
+        where: { 
+          name: this.accessControl.CUSTOMER 
+        }
       });
 
       const user = await this.userModel.create({
