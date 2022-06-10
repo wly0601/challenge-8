@@ -33,16 +33,14 @@ module.exports = {
       updatedAt: timestamp,
     }))
 
-    await queryInterface.bulkInsert('Users', users, {
-});
+    await queryInterface.bulkInsert('Users', users, {});
   },
 
   async down (queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', {
- name: {
- [Op.in]: names 
-} 
-}, {
-});
+      name: {
+        [Op.in]: names 
+      } 
+    }, {});
   }
 };

@@ -22,14 +22,15 @@ class AuthenticationController extends ApplicationController {
     CUSTOMER: "CUSTOMER",
   }
 
-  authorize =(rolename) => {
+  authorize = (rolename) => {
     return (req, res, next) => {
       try {
         const token = req.headers.authorization?.split("Bearer ")[1];
         const payload = this.decodeToken(token)
 
-        if (!!rolename && rolename != payload.role.name)
+        if (!!rolename && rolename !== payload.role.name){
           throw new InsufficientAccessError(payload?.role?.name);
+        }
 
         req.user = payload;
         next();

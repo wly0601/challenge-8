@@ -24,11 +24,16 @@ function apply(app) {
 
   const applicationController = new ApplicationController();
   const authenticationController = new AuthenticationController({
- bcrypt, jwt, roleModel, userModel, 
-});
+    bcrypt, 
+    jwt, 
+    roleModel, 
+    userModel, 
+  });
   const carController = new CarController({
- carModel, userCarModel, dayjs 
-});
+    carModel, 
+    userCarModel, 
+    dayjs 
+  });
 
   const accessControl = authenticationController.accessControl;
 
