@@ -11,7 +11,8 @@
     "db:migrate": "sequelize db:migrate",
     "db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
     "eslint": "eslint ./**/*.js",
-    "eslint:fix": "eslint --fix ./**/*.js"
+    "eslint:fix": "eslint --fix ./**/*.js",
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "eslint": "^8.17.0",
+    "jest": "^28.1.1",
     "nodemon": "^2.0.16",
     "supertest": "^6.2.3"
   }

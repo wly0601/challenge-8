@@ -1,5 +1,5 @@
 class ApplicationError extends Error {
-  get Details() {
+  get details() {
     return this.details;
   }
 

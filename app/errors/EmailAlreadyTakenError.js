@@ -7,7 +7,10 @@ class EmailAlreadyTakenError extends ApplicationError {
   }
 
   get details() {
-    return { email: this.email };
+    return { 
+      email: 
+      this.email 
+    };
   }
 }
 
