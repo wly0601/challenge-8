@@ -16,21 +16,13 @@ describe('Login User', () => {
     await User.create(createUser)
   });
 
-  afterAll(async () => {
-    await User.destroy({
-      where: {
-        email: "hutaocantik@binar.co.id"
-      }
-    })
-  })
-
   it('Not have any problem, response should be 201 with the accessToken', async () => {
 		return request(app)
       .post('/v1/auth/login')
       .set('Accept', 'application/json')
       .send({
         email: createUser.email,
-        password: password,
+        password,
       })
       .then((res) => {
         expect(res.statusCode).toBe(201);
@@ -53,7 +45,7 @@ describe('Login User', () => {
       .set('Accept', 'application/json')
       .send({
         email: notRegisteredEmail,
-        password: password,
+        password,
       })
       .then((res) => {
         expect(res.statusCode).toBe(404);

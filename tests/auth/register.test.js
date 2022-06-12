@@ -81,6 +81,11 @@ describe("Register", () => {
       })
       .then((res) => {
         expect(res.statusCode).toBe(422);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            ...res.body,
+          })
+        );        
       });
   });
 });
