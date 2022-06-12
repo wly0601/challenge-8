@@ -1,12 +1,22 @@
 const request = require("supertest");
-const app = require("../app");
-const { User } = require('../app/models');
+const app = require("../../app");
+const { User } = require('../../app/models');
 const { Op } = require("sequelize");
+const bcrypt = require("bcryptjs");
 
 describe("Register", () => {
   const names = ["Elaina","Aurellia","Anya","Gabriella"];
+
+  const password = "gaktausayang"
+  const createUser = {
+    name: "Hu Tao",
+    email: "hutaocantik@binar.co.id",
+    encryptedPassword: bcrypt.hashSync(password, 10),
+    roleId: 1,
+  };
+
   afterEach(async () => {
-    const user = await User.destroy({
+    await User.destroy({
       where: {
         [Op.or]: names.map((name) => {
           return {
@@ -44,17 +54,22 @@ describe("Register", () => {
   it("Register new user, but email already taken, response should be 422", async () => {
     
     //Find random data user from database, then pick the email
+    //This is only to make sure that we get the email that already in database
     const userCount = await User.count();
     const randomId = Math.floor(Math.random()*userCount) + 1;
-    const pickUser = await User.findOne({
+    var pickUser = await User.findOne({
       where : {
         id: randomId,
       }
     })
 
+    //But if the database is empty, then we must create one first
+    if(!pickUser){
+      pickUser = await User.create(createUser);
+    }
+
     //Find random name from names[], but set the email same as pickUser.email
     const name = names[Math.floor(Math.random()*names.length)];
-    const password = "password";
 
     return request(app)
       .post("/v1/auth/register")
