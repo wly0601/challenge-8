@@ -57,5 +57,5 @@ function apply(app) {
 }
 
 module.exports = {
- apply, 
+  apply, 
 }
