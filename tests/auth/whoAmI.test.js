@@ -1,12 +1,21 @@
 const request = require('supertest');
 const app = require('../../app');
 const { User } = require('../../app/models');
+const bcrypt = require("bcryptjs");
 
 let accessTokenAdmin;
 let accessTokenCustomer;
 
 describe('Who Am I', () => {
   beforeEach(async () => {
+    const password = "gaktausayang";
+    await User.create({
+      name: "Hu Tao",
+      email: "hutaocantik@binar.co.id",
+      encryptedPassword: bcrypt.hashSync(password, 10),
+      roleId: 1,
+    })
+
     const responseLoginAdmin = await request(app)
       .post('/v1/auth/login')
       .set('Accept', 'application/json')
@@ -23,7 +32,7 @@ describe('Who Am I', () => {
       .set('Accept', 'application/json')
       .send({
         email: "hutaocantik@binar.co.id",
-        password: "gaktausayang",
+        password,
       })
       .then((res) => {
         accessTokenCustomer = res.body.accessToken;

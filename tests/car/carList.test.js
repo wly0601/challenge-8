@@ -7,9 +7,20 @@ describe('GET Cars', () => {
     const carCount = await Car.count();
 
     // Get random page and pageSize
+    // Max pageSize in this test is 10
     const pageSize = Math.floor(Math.random()*10) + 1;
     const pageCount = Math.ceil(carCount / pageSize)
     const page = Math.floor(Math.random()*pageCount) + 1;
+    var resCarLength = pageSize;
+
+    // if page === pageCount, then 
+    // cars.length at res.body depends on pageSize and carCount
+    
+    if(page === pageCount && carCount % pageSize !== 0){
+      resCarLength = carCount % pageSize;
+    };
+
+    console.log(resCarLength);
 
     return request(app)
       .get(`/v1/cars?page=${page}&pageSize=${pageSize}`)
@@ -32,7 +43,7 @@ describe('GET Cars', () => {
             ]),
           }),
         );
-        expect(res.body.cars.length).toBe(pageSize)
+        expect(res.body.cars.length).toBe(resCarLength)
       });
   });
 });

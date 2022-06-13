@@ -44,6 +44,10 @@ class CarController extends ApplicationController {
         image,
       } = req.body;
 
+      if(typeof price !== 'number'){
+        throw new Error('Price must be in float!')
+      }
+
       const car = await this.carModel.create({
         name,
         price,
@@ -114,17 +118,24 @@ class CarController extends ApplicationController {
         image,
       } = req.body;
 
-      const car = this.getCarFromRequest(req);
+      const car = await this.getCarFromRequest(req);
 
-      await car.update({
+      const newCar = await this.carModel.update({
         name,
         price,
         size,
         image,
         isCurrentlyRented: false,
+      }, {
+        where: {
+          id: car.id,
+        },
       });
 
-      res.status(200).json(car);
+      res.status(201).json({
+        message: 'succesfully updated!',
+        data: await this.getCarFromRequest(req)
+      });
     }
 
     catch(err) {
@@ -138,15 +149,20 @@ class CarController extends ApplicationController {
   }
 
   handleDeleteCar = async (req, res) => {
-    const car = await this.carModel.destroy(req.params.id); 
+    const car = await this.carModel.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
     res.status(204).end();
   }
 
-  getCarFromRequest(req) {
-    return this.carModel.findByPk(req.params.id);
+  getCarFromRequest = async (req) => {
+    const response = await this.carModel.findByPk(req.params.id);
+    return response;
   }
 
-  getListQueryFromRequest(req) {
+  getListQueryFromRequest = (req) => {
     const { size, availableAt } = req.query;
     const offset = this.getOffsetFromRequest(req);
     const limit = req.query.pageSize || 10;
