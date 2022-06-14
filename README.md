@@ -1,9 +1,7 @@
-# BCR API
+# Challenge Chapter 8 - Binar Academy X Kampus Merdeka
 
-Di dalam repository ini terdapat implementasi API dari Binar Car Rental.
-Tugas kalian disini adalah:
-1. Fork repository
-2. Tulis unit test di dalam repository ini menggunakan `jest`.
-3. Coverage minimal 70%
+This repository was created to fulfill the assignment of challenge chapter 8 at Binar Academy X Kampus Merdeka - Fullstack Web Course.
 
-Good luck!
+# Applications Deployment Url
+
+[Challenge Chapter 8 Production](https://challenge-chapter-8-fadli.herokuapp.com)
