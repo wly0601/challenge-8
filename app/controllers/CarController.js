@@ -31,7 +31,6 @@ class CarController extends ApplicationController {
 
   handleGetCar = async (req, res) => {
     const car = await this.getCarFromRequest(req); 
-
     res.status(200).json(car);
   }
 
@@ -71,10 +70,17 @@ class CarController extends ApplicationController {
 
   handleRentCar = async (req, res, next) => {
     try {
-      let { rentStartedAt, rentEndedAt } = req.body;
-      const car = await this.getCarFromRequest(req)
+      const { rentStartedAt }  = req.body;
+      let { rentEndedAt } = req.body;
+      const car = await this.getCarFromRequest(req);
 
-      if (!rentEndedAt) rentEndedAt = this.dayjs(rentStartedAt).add(1, "day");
+      if (!rentStartedAt){
+        throw new Error('Please insert Date Correctly!');
+      }
+
+      if (!rentEndedAt){
+        rentEndedAt = this.dayjs(rentStartedAt).add(1, 'day');
+      }
 
       const activeRent = await this.userCarModel.findOne({
         where: {
@@ -83,14 +89,14 @@ class CarController extends ApplicationController {
             [Op.gte]: rentStartedAt,
           },
           rentEndedAt: {
-            [Op.lte]: rentEndedAt, 
-          }
-        }
+            [Op.lte]: rentEndedAt,
+          },
+        },
       });
 
       if (activeRent) {
         const err = new CarAlreadyRentedError(car);
-        res.status(422).json(err)
+        res.status(422).json(err);
         return;
       }
 
@@ -101,13 +107,19 @@ class CarController extends ApplicationController {
         rentEndedAt,
       });
 
-      res.status(201).json(userCar)
-    }
+      await this.carModel.update({
+        isCurrentlyRented: true,
+      }, {
+        where: {
+          id: req.params.id,
+        },
+      });
 
-    catch(err) {
-      next(err);
+      res.status(201).json(userCar);
+    } catch (err) { 
+      next(err)
     }
-  }
+  };
 
   handleUpdateCar = async (req, res) => {
     try {
@@ -174,6 +186,7 @@ class CarController extends ApplicationController {
     }
 
     if (size) where.size = size;
+
     if (availableAt) {
       include.where = {
         rentEndedAt: {

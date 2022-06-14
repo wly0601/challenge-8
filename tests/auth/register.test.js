@@ -51,6 +51,30 @@ describe("Register", () => {
       });
   });
 
+  it("Register new user, but name is empty", async () => {
+    //Generate random name from names[], then set it's email and password.
+    const name = names[Math.floor(Math.random()*names.length)];
+    const email = `${name}@binar.co.id`;
+    const password = "password";
+    
+    return request(app)
+      .post("/v1/auth/register")
+      .set("Content-Type", "application/json")
+      .send({ 
+        name: "", 
+        email, 
+        password 
+      })
+      .then((res) => {
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            ...res.body,
+          })
+        );
+      });
+  });
+
   it("Register new user, but email already taken, response should be 422", async () => {
     
     //Find random data user from database, then pick the email

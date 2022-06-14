@@ -69,6 +69,10 @@ class AuthenticationController extends ApplicationController {
         }]
       });
 
+      if(!email){
+        throw new Error('Insert Email!')
+      }
+
       if (!user) {
         const err = new EmailNotRegisteredError(email);
         res.status(404).json(err);
@@ -100,6 +104,11 @@ class AuthenticationController extends ApplicationController {
       const name = req.body.name;
       const email = req.body.email.toLowerCase();
       const password = req.body.password;
+
+      if(!name){
+        throw new Error('Name must not be empty!')
+      }
+
       let existingUser = await this.userModel.findOne({ 
         where: { 
           email, 

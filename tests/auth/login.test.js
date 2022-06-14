@@ -34,6 +34,24 @@ describe('Login User', () => {
       });
   });
 
+  it("Login new user, but email is empty", async () => {    
+    return request(app)
+      .post("/v1/auth/login")
+      .set("Content-Type", "application/json")
+      .send({ 
+        email: "", 
+        password 
+      })
+      .then((res) => {
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            ...res.body,
+          })
+        );
+      });
+  });
+
   it('Email is not registered, response should be 404', async () => {
     // Testing the email is not registered, 
     // Choose (for example) "typo version of createUser.email"

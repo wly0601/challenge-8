@@ -25,7 +25,6 @@ describe('Who Am I', () => {
       });
 
     accessTokenAdmin = responseLoginAdmin.body.accessToken;
-    console.log(accessTokenAdmin)
 
     await request(app)
       .post('/v1/auth/login')
@@ -36,7 +35,6 @@ describe('Who Am I', () => {
       })
       .then((res) => {
         accessTokenCustomer = res.body.accessToken;
-        console.log(accessTokenCustomer)
       });
   });
 

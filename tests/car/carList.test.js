@@ -11,16 +11,6 @@ describe('GET Cars', () => {
     const pageSize = Math.floor(Math.random()*10) + 1;
     const pageCount = Math.ceil(carCount / pageSize)
     const page = Math.floor(Math.random()*pageCount) + 1;
-    var resCarLength = pageSize;
-
-    // if page === pageCount, then 
-    // cars.length at res.body depends on pageSize and carCount
-    
-    if(page === pageCount && carCount % pageSize !== 0){
-      resCarLength = carCount % pageSize;
-    };
-
-    console.log(resCarLength);
 
     return request(app)
       .get(`/v1/cars?page=${page}&pageSize=${pageSize}`)
@@ -43,7 +33,17 @@ describe('GET Cars', () => {
             ]),
           }),
         );
-        expect(res.body.cars.length).toBe(resCarLength)
       });
+  });
+
+  it('Get car list, but query is size and availableAt', async () => {
+    const sizes = ["SMALL", "MEDIUM", "LARGE"];
+    const size = sizes[Math.floor(Math.random()*sizes.length)];
+
+    return request(app)
+      .get(`/v1/cars?size=${size}&availableAt=2022-06-11T16:06:28.559Z`)
+      .then((res) => {
+        expect(res.statusCode).toBe(200);
+      })
   });
 });

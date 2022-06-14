@@ -25,7 +25,6 @@ describe('UPDATE Cars', () => {
       }
     })
 
-    console.log(carCount)
     //If database car is empty, then we must create first
     if(!pickCar){
       pickCar = await Car.create({
