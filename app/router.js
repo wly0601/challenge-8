@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const dayjs = require("dayjs");
 const bcrypt = require("bcryptjs");
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("../docs/swagger.json");
 
 const {
   ApplicationController,
@@ -35,6 +37,9 @@ function apply(app) {
   });
 
   const accessControl = authenticationController.accessControl;
+
+  app.use("/docs", swaggerUI.serve);
+  app.get("/docs", swaggerUI.setup(swaggerDocument));
   app.get("/", applicationController.handleGetRoot)
   app.get("/favicon.ico", (req, res) => res.status(204).end())
 
