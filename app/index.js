@@ -20,7 +20,6 @@ app.listen(PORT, () => {
   console.log("Listening on port", PORT);
 })
 
-app.get("/", (req, res) => {
-  res.send("Jalan Bos");
+app.get("/", (req, res) => res.send("Jalan Bos"));
 
 module.exports = router.apply(app);
