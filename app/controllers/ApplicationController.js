@@ -28,6 +28,8 @@ class ApplicationController {
         details: err.details || null,
       }
     })
+
+    next(err)
   } 
 
   getOffsetFromRequest = (req) => {
