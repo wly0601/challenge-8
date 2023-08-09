@@ -7,7 +7,7 @@ const router = require("./router")
 const swaggerDocument = require("../docs/swagger.json");
 const { MORGAN_FORMAT } = require("../config/application")
 const app = express();
-const { PORT = 8000 } = process.env;
+const PORT = process.env.PORT || 8000;
 
 console.clear();
 
