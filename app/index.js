@@ -20,4 +20,10 @@ app.listen(PORT, () => {
   console.log("Listening on port", PORT);
 })
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "BCR API is up and running!",
+  });
+
 module.exports = router.apply(app);

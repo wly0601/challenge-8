@@ -35,12 +35,6 @@ function apply(app) {
   });
 
   const accessControl = authenticationController.accessControl;
-
-  app.get("/", (req, res) => {
-    res.status(200).json({
-      status: "OK",
-      message: "BCR API is up and running!",
-    });
   app.get("/favicon.ico", (req, res) => res.status(204).end())
 
   app.get("/v1/cars", carController.handleListCars);
