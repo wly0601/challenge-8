@@ -38,6 +38,7 @@ function apply(app) {
   const accessControl = authenticationController.accessControl;
 
   app.get("/", applicationController.handleGetRoot);
+  app.get("/favicon.ico", (req, res) => res.status(204).end())
 
   app.get("/v1/cars", carController.handleListCars);
   app.post("/v1/cars", authenticationController.authorize(accessControl.ADMIN), carController.handleCreateCar);
