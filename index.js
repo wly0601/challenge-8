@@ -3,9 +3,9 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan");
 const swaggerUI = require("swagger-ui-express");
-const router = require("./router")
-const swaggerDocument = require("../docs/swagger.json");
-const { MORGAN_FORMAT } = require("../config/application")
+const router = require("./app/router")
+const swaggerDocument = require("./docs/swagger.json");
+const { MORGAN_FORMAT } = require("./config/application")
 const app = express();
 const PORT = process.env.PORT || 8000;
 
