@@ -14,12 +14,9 @@ console.clear();
 app.use(morgan(MORGAN_FORMAT));
 app.use(cors());
 app.use(express.json());
-app.get("/documentation.json", (req, res) => res.send(swaggerDocument));
-app.use("/documentation", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 app.listen(PORT, () => {
   console.log("Listening on port", PORT);
 })
-
-app.get("/", (req, res) => res.send("Jalan Bos"));
 
 module.exports = router.apply(app);

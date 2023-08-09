@@ -35,6 +35,7 @@ function apply(app) {
   });
 
   const accessControl = authenticationController.accessControl;
+  app.get("/", applicationController.handleGetRoot)
   app.get("/favicon.ico", (req, res) => res.status(204).end())
 
   app.get("/v1/cars", carController.handleListCars);
@@ -50,7 +51,8 @@ function apply(app) {
 
   app.use(applicationController.handleNotFound);
   app.use(applicationController.handleError);
-
+  app.get("/documentation.json", (req, res) => res.send(swaggerDocument));
+  app.use("/documentation", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   return app;
 }
 
