@@ -1,11 +1,11 @@
 {
   "name": "challenge-08-fadli",
   "version": "1.0.0",
-  "main": "/bin/www",
+  "main": "/app/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node -r dotenv/config bin/www",
-    "develop": "nodemon -r dotenv/config bin/www",
+    "start": "node -r dotenv/config /app/index.js",
+    "develop": "nodemon -r dotenv/config /app/index.js",
     "db:create": "sequelize db:create",
     "db:drop": "sequelize db:drop",
     "db:migrate": "sequelize db:migrate",
