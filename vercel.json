@@ -3,11 +3,11 @@
 	"installCommand": "npm install",
 	"builds": [{
 		"src": "./bin/www",
-		"use": "@vercel/node"
+		"use": "@now/node"
 	}],
 	"routes": [{
 		"src": "/(.*)",
-		"dest": "/"
+		"dest": "/app/router.js"
 	}],
 	"rewrites": [{
 		"source": "/app/(.*)",
