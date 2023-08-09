@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 const dayjs = require("dayjs");
 const bcrypt = require("bcryptjs");
-const swaggerUI = require("swagger-ui-express");
-const swaggerDocument = require("../docs/swagger.json");
 
 const {
   ApplicationController,
@@ -53,8 +51,6 @@ function apply(app) {
 
   app.use(applicationController.handleNotFound);
   app.use(applicationController.handleError);
-  app.get("/documentation.json", (req, res) => res.send(swaggerDocument));
-  app.use("/documentation", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   return app;
 }
 
