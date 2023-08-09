@@ -9,8 +9,4 @@
 		"src": "/(.*)",
 		"dest": "/app/router.js"
 	}],
-	"rewrites": [{
-		"source": "/app/(.*)",
-		"destination": "/app"
-	}]
 }
