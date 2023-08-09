@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const dayjs = require("dayjs");
 const bcrypt = require("bcryptjs");
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("../docs/swagger.json");
 
 const {
   ApplicationController,
