@@ -38,8 +38,8 @@ function apply(app) {
 
   const accessControl = authenticationController.accessControl;
 
-  app.use("/docs", swaggerUI.serve);
-  app.get("/docs", swaggerUI.setup(swaggerDocument));
+  app.use("/documentation", swaggerUI.serve);
+  app.get("/documentation", swaggerUI.setup(swaggerDocument));
   app.get("/", applicationController.handleGetRoot)
   app.get("/favicon.ico", (req, res) => res.status(204).end())
 
