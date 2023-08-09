@@ -7,7 +7,7 @@ const { MORGAN_FORMAT } = require("./config/application")
 const app = express();
 const PORT = process.env.PORT || 8000;
 const swaggerUI = require("swagger-ui-express");
-const swaggerDocument = require("../docs/swagger.json");
+const swaggerDocument = require("./docs/swagger.json");
 
 console.clear();
 
