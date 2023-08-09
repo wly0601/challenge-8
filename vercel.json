@@ -5,8 +5,8 @@
 		"src": "./bin/www",
 		"use": "@now/node"
 	}],
-	"rewrites": [{
-		"source": "/app/(.*)",
-		"destination": "/app"
-	}]
+	"routes": [{
+		"src": "/(.*)",
+		"dest": "/bin/www"
+	}],
 }
