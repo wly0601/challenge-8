@@ -1,7 +1,7 @@
 {
   "name": "challenge-08-fadli",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "/bin/www",
   "license": "MIT",
   "scripts": {
     "start": "node -r dotenv/config bin/www",
