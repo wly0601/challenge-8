@@ -21,9 +21,6 @@ app.listen(PORT, () => {
 })
 
 app.get("/", (req, res) => {
-  res.status(200).json({
-    status: "OK",
-    message: "BCR API is up and running!",
-  });
+  res.send("Jalan Bos");
 
 module.exports = router.apply(app);
