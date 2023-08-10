@@ -37,9 +37,17 @@ function apply(app) {
   });
 
   const accessControl = authenticationController.accessControl;
+  const options = {
+    customCssUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js',
+      ],
+  };
 
-  app.get('/documentation.json', (req, res) => res.send(swaggerDocument));
-  app.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+  app.get('/api-docs.json', (req, res) => res.send(swaggerDocument));
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument, options));
   
   app.get("/", applicationController.handleGetRoot)
   app.get("/favicon.ico", (req, res) => res.status(204).end())
